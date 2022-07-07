@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -39,9 +38,8 @@ public class ProductController {
     @PostMapping(value = "/add")
 
     public ResponseEntity<ResponseModel> postProductController
-    (@Validated(PostingNew.class) @RequestBody ProductModel productModel) {
+    (@Validated(PostingNew.class) @RequestBody ProductModel productModel) throws ClientException {
 
-        try {
 
             ProductEntity product = productServices.add(productModel);
 
@@ -49,27 +47,10 @@ public class ProductController {
             response.setMsg("New product is successfully added");
             response.setData(product);
             return ResponseEntity.ok(response);
-
-        } catch (ClientException e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.badRequest().body(response);
-
-        } catch (Exception e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-            
-        }
     }
 
     @GetMapping(value = "/get")
-    public ResponseEntity<ResponseModel> getAllProductController() {
-
-        try {
+    public ResponseEntity<ResponseModel> getAllProductController() throws ClientException {
 
             List<ProductEntity> products = productServices.findAll();
 
@@ -78,21 +59,13 @@ public class ProductController {
             response.setData(products);
             return ResponseEntity.ok(response);
 
-        } catch (Exception e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-
-        }
     }
 
     @GetMapping(value = "/get/search")
     public ResponseEntity<ResponseModel> searchProductController
-    (@Validated(GettingAllByCriteria.class)  @RequestBody ProductModel productModel) {
+    (@Validated(GettingAllByCriteria.class) @RequestBody ProductModel productModel)
+     throws ClientException {
 
-        try {
             List<ProductEntity> products = productServices.findAllByCriteria(productModel);
 
             ResponseModel response = new ResponseModel();
@@ -100,23 +73,14 @@ public class ProductController {
             response.setData(products);
             return ResponseEntity.ok(response);
 
-        } catch (Exception e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-
-            return ResponseEntity.internalServerError().body(response);
-
-        }
 
     }
 
     @GetMapping(value = "/get/{id}")
     public ResponseEntity<ResponseModel> getProductByIdController(
-        @NotNull @PositiveOrZero  @PathVariable Integer id) {
+        @NotNull @PositiveOrZero  @PathVariable Integer id) throws ClientException, NotFoundException {
 
-        try {
+        
 
             ProductEntity product = productServices.findById(id);
 
@@ -125,33 +89,14 @@ public class ProductController {
             response.setData(product);
             return ResponseEntity.ok(response);
 
-        } catch (ClientException e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-
-        } catch (NotFoundException e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a faulue on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-
-        } catch (Exception e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-        }
+       
     }
 
     @PutMapping(value = "/update")
     public ResponseEntity<ResponseModel> putProductController
-    (@Validated(UpdatingById.class) @RequestBody ProductModel productModel) {
+    (@Validated(UpdatingById.class) @RequestBody ProductModel productModel) throws ClientException, NotFoundException {
 
-        try {
+        
 
             ProductEntity product = productServices.edit(productModel);
 
@@ -160,26 +105,15 @@ public class ProductController {
             response.setData(product);
             return ResponseEntity.ok(response);
 
-        } catch (ClientException e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.badRequest().body(response);
-
-        } catch (Exception e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server.");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-        }
+        
     }
 
     @DeleteMapping(value = "/delete")
     public ResponseEntity<ResponseModel> deleteProductController
-    (@Validated(DeletingById.class) @RequestBody ProductModel productModel) {
+    (@Validated(DeletingById.class) @RequestBody ProductModel productModel)
+     throws ClientException, NotFoundException {
 
-        try {
+        
             ProductEntity product = productServices.delete(productModel);
 
             ResponseModel response = new ResponseModel();
@@ -187,23 +121,7 @@ public class ProductController {
             response.setData(product);
             return ResponseEntity.ok(response);
 
-        } catch (ClientException e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-
-        } catch (NotFoundException e) {
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-            
-        } catch (Exception e) {
-            ResponseModel response = new ResponseModel();
-            response.setMsg("sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-        }
+       
     }
 
 }
