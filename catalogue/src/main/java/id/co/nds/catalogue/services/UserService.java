@@ -12,7 +12,6 @@ import id.co.nds.catalogue.exceptions.ClientException;
 import id.co.nds.catalogue.exceptions.NotFoundException;
 import id.co.nds.catalogue.globals.GlobalConstant;
 import id.co.nds.catalogue.entities.UserEntity;
-import id.co.nds.catalogue.models.ResponseModel;
 import id.co.nds.catalogue.models.Usermodel;
 import id.co.nds.catalogue.repos.UserRepo;
 import id.co.nds.catalogue.repos.specs.UserSpec;
@@ -27,12 +26,12 @@ public class UserService {
 
     public UserEntity add(Usermodel usermodel) throws ClientException {
 
-        userValidator.notNullCheckUserId(usermodel.getId());
-        userValidator.nullCheckUserFullname(usermodel.getFullname());
-        userValidator.nullCheckUserRoleId(usermodel.getRoleId());
+        // userValidator.notNullCheckUserId(usermodel.getId());
+        // userValidator.nullCheckUserFullname(usermodel.getFullname());
+        // userValidator.nullCheckUserRoleId(usermodel.getRoleId());
        
-        userValidator.validateFullname(usermodel.getFullname());
-        userValidator.validateroleId(usermodel.getRoleId());
+        // userValidator.validateFullname(usermodel.getFullname());
+        // userValidator.validateroleId(usermodel.getRoleId());
 
         long count = userRepo.countByName(usermodel.getCallnumber());
         if (count > 0) {
@@ -92,8 +91,8 @@ public class UserService {
 
     public UserEntity findById(Integer id) throws ClientException, NotFoundException {
 
-        userValidator.nullCheckUserId(id);
-        userValidator.validateUserId(id);
+        // userValidator.nullCheckUserId(id);
+        // userValidator.validateUserId(id);
 
         UserEntity userEntity = userRepo.findById(id).orElse(null);
         userValidator.nullCheckObject(userEntity);
@@ -104,8 +103,8 @@ public class UserService {
 
     public UserEntity edit(Usermodel usermodel) throws ClientException, NotFoundException {
 
-        userValidator.nullCheckUserId(usermodel.getId());
-        userValidator.validateUserId(usermodel.getId());
+        // userValidator.nullCheckUserId(usermodel.getId());
+        // userValidator.validateUserId(usermodel.getId());
 
         if (!userRepo.existsById(usermodel.getId())) {
 
@@ -117,20 +116,20 @@ public class UserService {
 
         if (usermodel.getFullname() != null) {
 
-            userValidator.validateFullname(usermodel.getFullname());
+            // userValidator.validateFullname(usermodel.getFullname());
 
             userEntity.setFullname(usermodel.getFullname());
         }
 
         if (usermodel.getRoleId() != null) {
 
-            userValidator.validateroleId(usermodel.getRoleId());
+            // userValidator.validateroleId(usermodel.getRoleId());
 
             userEntity.setRole_id(usermodel.getRoleId());
         }
 
         if (usermodel.getCallnumber() != null) {
-            userValidator.validateCallNumber(usermodel.getCallnumber());
+            // userValidator.validateCallNumber(usermodel.getCallnumber());
 
             Long count = userRepo.countByName(usermodel.getCallnumber());
             if (count > 0) {
@@ -148,8 +147,8 @@ public class UserService {
 
     public UserEntity delete(Usermodel usermodel) throws ClientException, NotFoundException {
 
-        userValidator.nullCheckUserId(usermodel.getId());
-        userValidator.validateUserId(usermodel.getId());
+        // userValidator.nullCheckUserId(usermodel.getId());
+        // userValidator.validateUserId(usermodel.getId());
 
         if (!userRepo.existsById(usermodel.getId())) {
             throw new NotFoundException("Cannot find User with id :" + usermodel.getId());

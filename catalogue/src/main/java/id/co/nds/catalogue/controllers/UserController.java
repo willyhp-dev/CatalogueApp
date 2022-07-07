@@ -2,9 +2,13 @@ package id.co.nds.catalogue.controllers;
 
 import java.util.List;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +18,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import id.co.nds.catalogue.controllers.ControllerGroup.DeletingById;
+import id.co.nds.catalogue.controllers.ControllerGroup.GettingAllByCriteria;
+import id.co.nds.catalogue.controllers.ControllerGroup.PostingNew;
+import id.co.nds.catalogue.controllers.ControllerGroup.UpdatingById;
 import id.co.nds.catalogue.entities.UserEntity;
 import id.co.nds.catalogue.exceptions.ClientException;
 import id.co.nds.catalogue.exceptions.NotFoundException;
@@ -23,6 +31,7 @@ import id.co.nds.catalogue.models.Usermodel;
 import id.co.nds.catalogue.services.UserService;
 
 @RestController
+@Validated
 @RequestMapping("/user")
 public class UserController {
     @Autowired
@@ -30,7 +39,8 @@ public class UserController {
 
     @PostMapping(value = "/adduser")
 
-    public ResponseEntity<ResponseModel> postUserController(@RequestBody Usermodel usermodel) {
+    public ResponseEntity<ResponseModel> postUserController
+    (@Validated(PostingNew.class)  @RequestBody Usermodel usermodel) {
 
         try {
 
@@ -53,6 +63,7 @@ public class UserController {
             response.setMsg("Sorry, there is a failure on our server");
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(response);
+
         }
     }
 
@@ -78,7 +89,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/getuser/search")
-    public ResponseEntity<ResponseModel> searchUserController(@RequestBody Usermodel usermodel) {
+    public ResponseEntity<ResponseModel> searchUserController(
+        @Validated(GettingAllByCriteria.class)  @RequestBody Usermodel usermodel) {
 
         try {
 
@@ -100,7 +112,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/getuser/{id}")
-    public ResponseEntity<ResponseModel> getUserByIdController(@PathVariable Integer id) {
+    public ResponseEntity<ResponseModel> getUserByIdController
+    (@NotNull @PositiveOrZero  @PathVariable Integer id) {
 
         try {
 
@@ -134,7 +147,8 @@ public class UserController {
     }
 
     @PutMapping(value = "/updateuser")
-    public ResponseEntity<ResponseModel> putUserController(@RequestBody Usermodel usermodel) {
+    public ResponseEntity<ResponseModel> putUserController
+    (@Validated(UpdatingById.class) @RequestBody Usermodel usermodel) {
 
         try {
 
@@ -163,7 +177,8 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/deleteuser")
-    public ResponseEntity<ResponseModel> deleteUserController(@RequestBody Usermodel usermodel) {
+    public ResponseEntity<ResponseModel> deleteUserController
+    (@Validated(DeletingById.class)  @RequestBody Usermodel usermodel) {
 
         try {
             UserEntity userEntity = userService.delete(usermodel);
@@ -172,6 +187,7 @@ public class UserController {
             response.setMsg("User is successfully deleted");
             response.setData(userEntity);
             return ResponseEntity.ok(response);
+
         } catch (ClientException e) {
             // TODO: handle exception
             ResponseModel response = new ResponseModel();
@@ -179,15 +195,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 
         } catch (NotFoundException e) {
+
             ResponseModel response = new ResponseModel();
             response.setMsg(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             
         } catch (Exception e) {
+
             ResponseModel response = new ResponseModel();
             response.setMsg("sorry, there is a failure on our server");
             e.printStackTrace();
             return ResponseEntity.internalServerError().body(response);
+            
         }
 
     }
