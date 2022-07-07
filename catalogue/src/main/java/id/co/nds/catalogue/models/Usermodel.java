@@ -25,7 +25,7 @@ public class Usermodel {
     private String fullname;
 
     @NotNull(message = "User role id cannot be null", groups = { PostingNew.class })
-    @Pattern(regexp = "^(R)[0-9]{5}$", message = "User Role id pattern input is invalid", 
+    @Pattern(regexp = "^(R)[0-9]{4}$", message = "User Role id pattern input is invalid", 
      groups = { PostingNew.class,
             GettingAllByCriteria.class, UpdatingById.class })
     private String roleId;
