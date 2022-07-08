@@ -40,10 +40,9 @@ public class UserController {
     @PostMapping(value = "/adduser")
 
     public ResponseEntity<ResponseModel> postUserController
-    (@Validated(PostingNew.class)  @RequestBody Usermodel usermodel) {
+    (@Validated(PostingNew.class)  @RequestBody Usermodel usermodel) throws ClientException {
 
-        try {
-
+      
             UserEntity userEntity = userService.add(usermodel);
 
             ResponseModel response = new ResponseModel();
@@ -51,20 +50,6 @@ public class UserController {
             response.setData(userEntity);
             return ResponseEntity.ok(response);
 
-        } catch (ClientException e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.badRequest().body(response);
-
-        } catch (Exception e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-
-        }
     }
 
     @GetMapping(value = "/getuser")
@@ -90,9 +75,8 @@ public class UserController {
 
     @GetMapping(value = "/getuser/search")
     public ResponseEntity<ResponseModel> searchUserController(
-        @Validated(GettingAllByCriteria.class)  @RequestBody Usermodel usermodel) {
-
-        try {
+            @Validated(GettingAllByCriteria.class) @RequestBody Usermodel usermodel)
+        throws ClientException {
 
             List<UserEntity> users = userService.findAllByCriteria(usermodel);
 
@@ -101,21 +85,14 @@ public class UserController {
             response.setData(users);
             return ResponseEntity.ok(response);
 
-        } catch (Exception e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is  a failure on our server");
-            e.printStackTrace();
-
-            return ResponseEntity.ok(response);
-        }
     }
 
     @GetMapping(value = "/getuser/{id}")
     public ResponseEntity<ResponseModel> getUserByIdController
-    (@NotNull @PositiveOrZero  @PathVariable Integer id) {
+    (@NotNull @PositiveOrZero @PathVariable Integer id)
+    throws ClientException, NotFoundException {
 
-        try {
+       
 
             UserEntity userEntity = userService.findById(id);
 
@@ -124,33 +101,15 @@ public class UserController {
             response.setData(userEntity);
             return ResponseEntity.ok(response);
 
-        } catch (ClientException e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-
-        } catch (NotFoundException e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-
-        } catch (Exception e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-        }
+       
     }
 
     @PutMapping(value = "/updateuser")
     public ResponseEntity<ResponseModel> putUserController
-    (@Validated(UpdatingById.class) @RequestBody Usermodel usermodel) {
+    (@Validated(UpdatingById.class) @RequestBody Usermodel usermodel)
+    throws ClientException, NotFoundException {
 
-        try {
+        
 
             UserEntity userEntity = userService.edit(usermodel);
 
@@ -159,55 +118,20 @@ public class UserController {
             response.setData(userEntity);
             return ResponseEntity.ok(response);
 
-        } catch (ClientException e) {
-            // TODO: handle exception
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            return ResponseEntity.badRequest().body(response);
-
-        } catch (Exception e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-
-        }
     }
 
     @DeleteMapping(value = "/deleteuser")
     public ResponseEntity<ResponseModel> deleteUserController
-    (@Validated(DeletingById.class)  @RequestBody Usermodel usermodel) {
+    (@Validated(DeletingById.class) @RequestBody Usermodel usermodel)
+     throws ClientException, NotFoundException  {
 
-        try {
+       
             UserEntity userEntity = userService.delete(usermodel);
 
             ResponseModel response = new ResponseModel();
             response.setMsg("User is successfully deleted");
             response.setData(userEntity);
             return ResponseEntity.ok(response);
-
-        } catch (ClientException e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-
-        } catch (NotFoundException e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-            
-        } catch (Exception e) {
-
-            ResponseModel response = new ResponseModel();
-            response.setMsg("sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-            
-        }
 
     }
 
