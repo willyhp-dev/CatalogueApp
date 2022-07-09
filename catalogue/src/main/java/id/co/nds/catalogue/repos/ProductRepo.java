@@ -19,7 +19,8 @@ public interface ProductRepo extends JpaRepository<ProductEntity, Integer>,
                 JpaSpecificationExecutor<ProductEntity> {
                 
     @Query(value = "SELECT COUNT(*) FROM ms_product WHERE rec_status = '"
-            + GlobalConstant.REC_STATUS_ACTIVE + "' AND LOWER(name) = LOWER(:name)", nativeQuery = true)
+                    + GlobalConstant.REC_STATUS_ACTIVE + "' AND LOWER(name) = LOWER(:name)", 
+            nativeQuery = true)
     long countByName(@Param("name") String name);
 
     @Modifying

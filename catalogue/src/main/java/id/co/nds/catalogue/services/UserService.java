@@ -12,7 +12,9 @@ import id.co.nds.catalogue.exceptions.ClientException;
 import id.co.nds.catalogue.exceptions.NotFoundException;
 import id.co.nds.catalogue.globals.GlobalConstant;
 import id.co.nds.catalogue.entities.UserEntity;
+import id.co.nds.catalogue.entities.UserInfoEntity;
 import id.co.nds.catalogue.models.Usermodel;
+import id.co.nds.catalogue.repos.UserInfoRepo;
 import id.co.nds.catalogue.repos.UserRepo;
 import id.co.nds.catalogue.repos.specs.UserSpec;
 import id.co.nds.catalogue.validators.UserValidator;
@@ -21,9 +23,20 @@ import id.co.nds.catalogue.validators.UserValidator;
 public class UserService {
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private UserInfoRepo userInfoRepo;
 
     UserValidator userValidator = new UserValidator();
 
+    public List<UserInfoEntity> findByAllRole(String name) throws ClientException, NotFoundException {
+
+        List<UserInfoEntity> userInfoEntities = userInfoRepo.findByAllRole(name);
+        userValidator.nullCheckObject(userInfoEntities);
+        
+        return userInfoEntities;
+   }
+   
+   
     public UserEntity add(Usermodel usermodel) throws ClientException {
 
         // userValidator.notNullCheckUserId(usermodel.getId());

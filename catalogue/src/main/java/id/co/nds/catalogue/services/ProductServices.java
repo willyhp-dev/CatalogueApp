@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import id.co.nds.catalogue.entities.ProductEntity;
+import id.co.nds.catalogue.entities.ProductInfoEntity;
 import id.co.nds.catalogue.exceptions.ClientException;
 import id.co.nds.catalogue.exceptions.NotFoundException;
 import id.co.nds.catalogue.globals.GlobalConstant;
 import id.co.nds.catalogue.models.ProductModel;
+import id.co.nds.catalogue.repos.ProductInfoRepo;
 import id.co.nds.catalogue.repos.ProductRepo;
 import id.co.nds.catalogue.repos.specs.ProductSpec;
+import id.co.nds.catalogue.validators.CategoryValidator;
 import id.co.nds.catalogue.validators.ProductValidator;
 
 @Service
@@ -21,17 +24,29 @@ public class ProductServices {
     @Autowired
     private ProductRepo productRepo;
 
+    @Autowired
+    private ProductInfoRepo productInfoRepo;
+
+
     ProductValidator productValidator = new ProductValidator();
+    CategoryValidator categoryValidator = new CategoryValidator();
+
+    public List<ProductInfoEntity> findAllByCategories(String categoryId)
+    throws ClientException, NotFoundException {
+        
+        categoryValidator.nullCheckCategoryId(categoryId);
+        categoryValidator.validateCategoryId(categoryId);
+
+        List<ProductInfoEntity> product = productInfoRepo.findAllByCategory(categoryId);
+        productValidator.nullCheckObject(product);
+
+        return product;
+
+    }
+
 
     public ProductEntity add(ProductModel productModel) throws ClientException {
 
-        // productValidator.notNullCheckProductId(productModel.getId());
-        // productValidator.nullCheckName(productModel.getName());
-        // productValidator.validateName(productModel.getName());
-        // productValidator.nullCheckQuantity(productModel.getQuantity());
-        // productValidator.validateQuantity(productModel.getQuantity());
-        // productValidator.nullCheckCategoryId(productModel.getCategoryId());
-        // productValidator.validateCategoryId(productModel.getCategoryId());
 
         long count = productRepo.countByName(productModel.getName());
         if (count > 0) {
@@ -66,8 +81,6 @@ public class ProductServices {
 
     public ProductEntity findById(Integer id) throws ClientException, NotFoundException {
 
-        // productValidator.nullCheckProductId(id);
-        // productValidator.validateProductId(id);
 
         ProductEntity product = productRepo.findById(id).orElse(null);
         productValidator.nullCheckObject(product);
@@ -77,9 +90,7 @@ public class ProductServices {
 
     public ProductEntity edit(ProductModel productModel) throws ClientException, NotFoundException {
 
-        // productValidator.nullCheckProductId(productModel.getId());
-        // productValidator.validateProductId(productModel.getId());
-
+        
         if (!productRepo.existsById(productModel.getId())) {
             throw new NotFoundException("Cannot find product with id: " + productModel.getId());
         }
@@ -88,7 +99,6 @@ public class ProductServices {
         productEntity = findById(productModel.getId());
 
         if (productModel.getName() != null) {
-            // productValidator.validateName(productModel.getName());
 
             Long count = productRepo.countByName(productModel.getName());
             if (count > 0) {
@@ -120,8 +130,6 @@ public class ProductServices {
 
     public ProductEntity delete(ProductModel productModel) throws ClientException, NotFoundException {
         
-        // productValidator.nullCheckProductId(productModel.getId());
-        // productValidator.validateProductId(productModel.getId());
 
         if (!productRepo.existsById(productModel.getId())) {
             throw new NotFoundException("Cannot find product with id: " + productModel.getId());
@@ -144,7 +152,7 @@ public class ProductServices {
 
         return product;
 
-        // return productRepo.save(product);
+    
 
     }
 }

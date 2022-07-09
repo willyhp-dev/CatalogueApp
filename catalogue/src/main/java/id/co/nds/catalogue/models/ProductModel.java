@@ -12,7 +12,7 @@ import id.co.nds.catalogue.controllers.ControllerGroup.PostingNew;
 import id.co.nds.catalogue.controllers.ControllerGroup.RequestMethodById;
 import id.co.nds.catalogue.controllers.ControllerGroup.UpdatingById;
 
-public class ProductModel {
+public class ProductModel extends RecordModel {
 
     @Null(message = "Product id must be null", groups = { PostingNew.class })
     @NotNull(message = "Product Id cannot be null", groups = { UpdatingById.class, DeletingById.class })
@@ -26,24 +26,19 @@ public class ProductModel {
     private String name;
 
     @NotNull(message = "Product Quantity cannot be null", groups = { PostingNew.class })
+    // @Pattern(regexp = "^[0-9]$", message = "Product Quantity me be numeric",
+    // groups = { PostingNew.class,
+    // GettingAllByCriteria.class,
+    // UpdatingById.class })
     @PositiveOrZero(message = "Product stock must not be less than 0", groups = { PostingNew.class,
             GettingAllByCriteria.class,
             UpdatingById.class })
     private Integer quantity;
 
     @NotNull(message = "Category id cannot be null", groups = { PostingNew.class })
-    @Pattern(regexp = "^(PC)[0-9]{4}", message = "Product Id pattern input is invalid", groups = {
+    @Pattern(regexp = "^(PC)[0-9]{4}", message = "Category Id pattern input is invalid", groups = {
             GettingAllByCriteria.class, UpdatingById.class, PostingNew.class })
     private String categoryId;
-
-    @PositiveOrZero(message = "Product Stock must not be less than 0", groups = { PostingNew.class,
-            RequestMethodById.class })
-    private Integer actorId;
-
-    @Pattern(regexp = "^[A,a,N,n]$", message = "Product recStatus can only be inputted by 'A' or 'N' ", groups = {
-            GettingAllByCriteria.class
-    })
-    private String recStatus;
 
     public Integer getId() {
         return id;
@@ -75,22 +70,6 @@ public class ProductModel {
 
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
-    }
-
-    public Integer getActorId() {
-        return actorId;
-    }
-
-    public void setActorId(Integer actorId) {
-        this.actorId = actorId;
-    }
-
-    public String getRecStatus() {
-        return recStatus;
-    }
-
-    public void setRecStatus(String recStatus) {
-        this.recStatus = recStatus;
     }
 
 }

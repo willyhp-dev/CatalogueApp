@@ -3,7 +3,6 @@ package id.co.nds.catalogue.globals;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -16,8 +15,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.NoHandlerFoundException;
+
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+// import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 
 import id.co.nds.catalogue.exceptions.ClientException;
 import id.co.nds.catalogue.exceptions.NotFoundException;
@@ -26,6 +27,20 @@ import id.co.nds.catalogue.models.ResponseModel;
 @ControllerAdvice
 @RestController
 public class GlobalResponseEntityHandler extends ResponseEntityExceptionHandler {
+
+
+    // @ExceptionHandler(InvalidFormatException.class)
+    // public ResponseEntity<Object> handleInvalidFormatException
+    // (InvalidFormatException ex, WebRequest request){
+    //     Map<String, String> data = new HashMap<>();
+    //     data.put("error", ex.getMessage());
+
+    //     ResponseModel response = new ResponseModel();
+    //     response.setMsg("Client error");
+    //     response.setData(data);
+
+    //     return ResponseEntity.badRequest().body(response);
+    // }
 
     @ExceptionHandler({ ClientException.class })
     public ResponseEntity<Object> handleClientException(ClientException ex,
