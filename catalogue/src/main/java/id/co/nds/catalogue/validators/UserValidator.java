@@ -14,7 +14,8 @@ public class UserValidator {
     public void notNullCheckUserId(Integer id) throws ClientException {
 
         if (id != null) {
-            throw new ClientException("User id is Auto genereated, do not input id");
+            throw new ClientException(
+                    "User id is Auto genereated, do not input id");
         }
     }
 
@@ -31,7 +32,8 @@ public class UserValidator {
         }
     }
 
-    public void nullCheckUserCallNumber(String callNumber) throws ClientException {
+    public void nullCheckUserCallNumber(String callNumber)
+            throws ClientException {
 
         if (callNumber == null) {
             throw new ClientException("User Number is required");
@@ -60,7 +62,8 @@ public class UserValidator {
     public void validateroleId(String roleId) throws ClientException {
 
         if (roleId.length() < 5 && !roleId.startsWith("R")) {
-            throw new ClientException("User role id constains 5 digits and starts with 'R' ");
+            throw new ClientException(
+                    "User role id constains 5 digits and starts with 'R' ");
 
         } else {
             String number = roleId.substring(1);
@@ -84,7 +87,8 @@ public class UserValidator {
                     Long.parseLong(number);
                 } catch (NumberFormatException e) {
                     // TODO: handle exception
-                    throw new ClientException("User call Number must be numeric");
+                    throw new ClientException(
+                            "User call Number must be numeric");
                 }
 
                 if (number.length() < 9 || number.length() > 12) {
@@ -100,7 +104,8 @@ public class UserValidator {
                     Long.parseLong(hasil);
                 } catch (NumberFormatException e) {
                     // TODO: handle exception
-                    throw new ClientException("User call Number must be numeric");
+                    throw new ClientException(
+                            "User call Number must be numeric");
                 }
 
                 if (number.length() < 9 || number.length() > 12) {
@@ -115,8 +120,10 @@ public class UserValidator {
 
     }
 
-    public void validateRecStatus(String id, String recStatus) throws ClientException {
-        throw new ClientException("User with id =" + id + "is already been deleted");
+    public void validateRecStatus(String id, String recStatus)
+            throws ClientException {
+        throw new ClientException(
+                "User with id =" + id + "is already been deleted");
     }
 
 }

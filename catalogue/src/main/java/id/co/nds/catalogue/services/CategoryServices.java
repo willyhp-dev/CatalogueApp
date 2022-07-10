@@ -21,7 +21,8 @@ public class CategoryServices {
     private CategoryRepo categoryRepo;
     CategoryValidator categoryValidator = new CategoryValidator();
 
-    public CategoryEntity add(CategoryModel categoryModel) throws ClientException {
+    public CategoryEntity add(CategoryModel categoryModel)
+            throws ClientException {
 
         categoryValidator.notnullCheckCategoryId(categoryModel.getId());
         categoryValidator.nullCheckName(categoryModel.getName());
@@ -36,9 +37,10 @@ public class CategoryServices {
         categoryEntity.setName(categoryModel.getName());
 
         categoryEntity.setRecStatus(GlobalConstant.REC_STATUS_ACTIVE);
-        categoryEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
+        categoryEntity
+                .setCreatedDate(new Timestamp(System.currentTimeMillis()));
         categoryEntity.setCreatorId(categoryModel.getActorId() == null ? 0
-        : categoryModel.getActorId());
+                : categoryModel.getActorId());
 
         return categoryRepo.save(categoryEntity);
     }
@@ -50,7 +52,8 @@ public class CategoryServices {
         return categories;
     }
 
-    public CategoryEntity findById(String id) throws ClientException, NotFoundException {
+    public CategoryEntity findById(String id)
+            throws ClientException, NotFoundException {
 
         categoryValidator.nullCheckCategoryId(id);
         categoryValidator.validateCategoryId(id);
@@ -61,11 +64,13 @@ public class CategoryServices {
         return categoryEntity;
     }
 
-    public CategoryEntity edit(CategoryModel categoryModel) throws ClientException, NotFoundException {
+    public CategoryEntity edit(CategoryModel categoryModel)
+            throws ClientException, NotFoundException {
 
         categoryValidator.nullCheckCategoryId(categoryModel.getId());
         if (!categoryRepo.existsById(categoryModel.getId())) {
-            throw new NotFoundException("Cannot find Category with id: " + categoryModel);
+            throw new NotFoundException(
+                    "Cannot find Category with id: " + categoryModel);
         }
 
         CategoryEntity category = new CategoryEntity();
@@ -84,31 +89,37 @@ public class CategoryServices {
         }
 
         category.setUpdatedDate((new Timestamp(System.currentTimeMillis())));
-        category.setUpdaterId(categoryModel.getActorId() == null ? 0 : categoryModel.getActorId());
+        category.setUpdaterId(categoryModel.getActorId() == null ? 0
+                : categoryModel.getActorId());
 
         return categoryRepo.save(category);
 
     }
 
-    public CategoryEntity delete(CategoryModel categoryModel) throws ClientException, NotFoundException {
+    public CategoryEntity delete(CategoryModel categoryModel)
+            throws ClientException, NotFoundException {
 
         categoryValidator.nullCheckCategoryId(categoryModel.getId());
         categoryValidator.validateCategoryId(categoryModel.getId());
 
         if (!categoryRepo.existsById(categoryModel.getId())) {
-            throw new NotFoundException("Cannot find category with id:" + categoryModel.getId());
+            throw new NotFoundException(
+                    "Cannot find category with id:" + categoryModel.getId());
         }
 
         CategoryEntity category = new CategoryEntity();
         category = findById(categoryModel.getId());
 
-        if(category.getRecStatus().equalsIgnoreCase(GlobalConstant.REC_STATUS_NON_ACTIVE)){
-            throw new ClientException("Category id (" + categoryModel.getId() + ") is already been deleted");
+        if (category.getRecStatus()
+                .equalsIgnoreCase(GlobalConstant.REC_STATUS_NON_ACTIVE)) {
+            throw new ClientException("Category id (" + categoryModel.getId()
+                    + ") is already been deleted");
         }
 
         category.setRecStatus(GlobalConstant.REC_STATUS_NON_ACTIVE);
         category.setDeletedDate(new Timestamp(System.currentTimeMillis()));
-        category.setDeleterId(categoryModel.getActorId() == null ? 0 : categoryModel.getActorId());
+        category.setDeleterId(categoryModel.getActorId() == null ? 0
+                : categoryModel.getActorId());
 
         return categoryRepo.save(category);
     }

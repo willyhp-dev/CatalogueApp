@@ -47,92 +47,56 @@ public class UserEntity {
     @Column(name = "rec_status")
     private String recStatus;
 
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public void setId(Integer id) { this.id = id; }
 
-    public String getFullname() {
-        return fullname;
-    }
+    public String getFullname() { return fullname; }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
+    public void setFullname(String fullname) { this.fullname = fullname; }
 
-    public String getRole_id() {
-        return role_id;
-    }
+    public String getRole_id() { return role_id; }
 
-    public void setRole_id(String role_id) {
-        this.role_id = role_id;
-    }
+    public void setRole_id(String role_id) { this.role_id = role_id; }
 
-    public String getCallNumber() {
-        return callNumber;
-    }
+    public String getCallNumber() { return callNumber; }
 
     public void setCallNumber(String callNumber) {
         this.callNumber = callNumber;
     }
 
-    public Timestamp getCreatedDate() {
-        return createdDate;
-    }
+    public Timestamp getCreatedDate() { return createdDate; }
 
     public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Integer getCreatorId() {
-        return creatorId;
-    }
+    public Integer getCreatorId() { return creatorId; }
 
-    public void setCreatorId(Integer creatorId) {
-        this.creatorId = creatorId;
-    }
+    public void setCreatorId(Integer creatorId) { this.creatorId = creatorId; }
 
-    public Timestamp getUpdatedDate() {
-        return updatedDate;
-    }
+    public Timestamp getUpdatedDate() { return updatedDate; }
 
     public void setUpdatedDate(Timestamp updatedDate) {
         this.updatedDate = updatedDate;
     }
 
-    public Integer getUpdaterId() {
-        return updaterId;
-    }
+    public Integer getUpdaterId() { return updaterId; }
 
-    public void setUpdaterId(Integer updaterId) {
-        this.updaterId = updaterId;
-    }
+    public void setUpdaterId(Integer updaterId) { this.updaterId = updaterId; }
 
-    public Timestamp getDeletedDate() {
-        return deletedDate;
-    }
+    public Timestamp getDeletedDate() { return deletedDate; }
 
     public void setDeletedDate(Timestamp deletedDate) {
         this.deletedDate = deletedDate;
     }
 
-    public Integer getDeleterId() {
-        return deleterId;
-    }
+    public Integer getDeleterId() { return deleterId; }
 
-    public void setDeleterId(Integer deleterId) {
-        this.deleterId = deleterId;
-    }
+    public void setDeleterId(Integer deleterId) { this.deleterId = deleterId; }
 
-    public String getRecStatus() {
-        return recStatus;
-    }
+    public String getRecStatus() { return recStatus; }
 
-    public void setRecStatus(String recStatus) {
-        this.recStatus = recStatus;
-    }
+    public void setRecStatus(String recStatus) { this.recStatus = recStatus; }
 
 }

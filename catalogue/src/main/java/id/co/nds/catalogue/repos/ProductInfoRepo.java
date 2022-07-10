@@ -12,10 +12,11 @@ import id.co.nds.catalogue.entities.ProductInfoEntity;
 
 @Repository
 @Transactional
-public interface ProductInfoRepo extends JpaRepository<ProductInfoEntity, Integer>  {
+public interface ProductInfoRepo
+        extends JpaRepository<ProductInfoEntity, Integer> {
 
-    @Query(value = " SELECT p.*, c.name AS category_name  FROM ms_product AS p " +
-            " JOIN ms_category AS c ON p.category_id = c.id" + " WHERE p.category_id = ?1", 
-             nativeQuery = true)
+    @Query(value = " SELECT p.*, c.name AS category_name  FROM ms_product AS p "
+            + " JOIN ms_category AS c ON p.category_id = c.id"
+            + " WHERE p.category_id = ?1", nativeQuery = true)
     List<ProductInfoEntity> findAllByCategory(String categoryId);
 }

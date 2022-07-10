@@ -12,15 +12,15 @@ import org.hibernate.id.IdentifierGenerator;
 public class RoleIdGenerator implements IdentifierGenerator {
 
     @Override
-    public Serializable generate(SharedSessionContractImplementor ssci, Object o)
-     throws HibernateException {
+    public Serializable generate(SharedSessionContractImplementor ssci,
+            Object o) throws HibernateException {
         // TODO Auto-generated method stub
         Connection connection = ssci.connection();
 
         try {
-            
-            PreparedStatement ps = connection.prepareStatement
-            ("SELECT COUNT(*) AS seq FROM ms_role");
+
+            PreparedStatement ps = connection
+                    .prepareStatement("SELECT COUNT(*) AS seq FROM ms_role");
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -31,16 +31,15 @@ public class RoleIdGenerator implements IdentifierGenerator {
             }
 
             else {
-                throw new HibernateException("Generator is failed to generate id");
+                throw new HibernateException(
+                        "Generator is failed to generate id");
             }
 
         } catch (Exception e) {
-            //TODO: handle exception
+            // TODO: handle exception
             e.printStackTrace();
         }
         return null;
     }
- 
-    
 
 }

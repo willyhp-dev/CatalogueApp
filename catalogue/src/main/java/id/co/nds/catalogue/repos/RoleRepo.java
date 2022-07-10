@@ -13,9 +13,9 @@ import id.co.nds.catalogue.globals.GlobalConstant;
 public interface RoleRepo extends JpaRepository<RoleEntity, String>,
         JpaSpecificationExecutor<RoleEntity> {
 
-            @Query(value = "SELECT COUNT(*) FROM ms_role WHERE rec_status = '"
-            + GlobalConstant.REC_STATUS_ACTIVE + "' AND LOWER(name) = LOWER(:name)", 
-            nativeQuery = true)
+    @Query(value = "SELECT COUNT(*) FROM ms_role WHERE rec_status = '"
+            + GlobalConstant.REC_STATUS_ACTIVE
+            + "' AND LOWER(name) = LOWER(:name)", nativeQuery = true)
     long countByName(@Param("name") String name);
 
 }

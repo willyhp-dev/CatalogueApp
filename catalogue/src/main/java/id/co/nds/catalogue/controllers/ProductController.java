@@ -55,7 +55,8 @@ public class ProductController {
         }
 
         @GetMapping(value = "/get")
-        public ResponseEntity<ResponseModel> getAllProductController() throws ClientException {
+        public ResponseEntity<ResponseModel> getAllProductController()
+                        throws ClientException {
 
                 List<ProductEntity> products = productServices.findAll();
 
@@ -69,9 +70,10 @@ public class ProductController {
         @GetMapping(value = "/get/search")
         public ResponseEntity<ResponseModel> searchProductController(
                         @Validated(GettingAllByCriteria.class) @RequestBody ProductModel productModel)
-                        throws ClientException, InvalidFormatException {
+                        throws ClientException {
 
-                List<ProductEntity> products = productServices.findAllByCriteria(productModel);
+                List<ProductEntity> products = productServices
+                                .findAllByCriteria(productModel);
 
                 ResponseModel response = new ResponseModel();
                 response.setMsg("Request Successfully");
@@ -81,12 +83,13 @@ public class ProductController {
         }
 
         @GetMapping(value = "/get/info")
-        public ResponseEntity<ResponseModel> getAllByCategoryController
-        (@RequestParam String categoryId) {
+        public ResponseEntity<ResponseModel> getAllByCategoryController(
+                        @RequestParam String categoryId) {
 
                 try {
 
-                        List<ProductInfoEntity> product = productServices.findAllByCategories(categoryId);
+                        List<ProductInfoEntity> product = productServices
+                                        .findAllByCategories(categoryId);
 
                         ResponseModel response = new ResponseModel();
                         response.setMsg("Request successfully");
@@ -103,14 +106,16 @@ public class ProductController {
 
                         ResponseModel response = new ResponseModel();
                         response.setMsg(e.getMessage());
-                        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+                        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                        .body(response);
 
                 } catch (Exception e) {
 
                         ResponseModel response = new ResponseModel();
                         response.setMsg("sorry, there is a failure on our server");
                         e.printStackTrace();
-                        return ResponseEntity.internalServerError().body(response);
+                        return ResponseEntity.internalServerError()
+                                        .body(response);
 
                 }
 
@@ -119,7 +124,7 @@ public class ProductController {
         @GetMapping(value = "/get/{id}")
         public ResponseEntity<ResponseModel> getProductByIdController(
                         @NotNull @PositiveOrZero @PathVariable Integer id)
-                        throws ClientException, NotFoundException, InvalidFormatException {
+                        throws ClientException, NotFoundException {
 
                 ProductEntity product = productServices.findById(id);
 
@@ -133,7 +138,7 @@ public class ProductController {
         @PutMapping(value = "/update")
         public ResponseEntity<ResponseModel> putProductController(
                         @Validated(UpdatingById.class) @RequestBody ProductModel productModel)
-                        throws ClientException, NotFoundException, InvalidFormatException {
+                        throws ClientException, NotFoundException {
 
                 ProductEntity product = productServices.edit(productModel);
 
@@ -147,7 +152,7 @@ public class ProductController {
         @DeleteMapping(value = "/delete")
         public ResponseEntity<ResponseModel> deleteProductController(
                         @Validated(DeletingById.class) @RequestBody ProductModel productModel)
-                        throws ClientException, NotFoundException, InvalidFormatException {
+                        throws ClientException, NotFoundException {
 
                 ProductEntity product = productServices.delete(productModel);
 

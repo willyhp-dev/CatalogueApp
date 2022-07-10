@@ -27,26 +27,24 @@ public class ProductServices {
     @Autowired
     private ProductInfoRepo productInfoRepo;
 
-
     ProductValidator productValidator = new ProductValidator();
     CategoryValidator categoryValidator = new CategoryValidator();
 
     public List<ProductInfoEntity> findAllByCategories(String categoryId)
-    throws ClientException, NotFoundException {
-        
+            throws ClientException, NotFoundException {
+
         categoryValidator.nullCheckCategoryId(categoryId);
         categoryValidator.validateCategoryId(categoryId);
 
-        List<ProductInfoEntity> product = productInfoRepo.findAllByCategory(categoryId);
+        List<ProductInfoEntity> product = productInfoRepo
+                .findAllByCategory(categoryId);
         productValidator.nullCheckObject(product);
 
         return product;
 
     }
 
-
     public ProductEntity add(ProductModel productModel) throws ClientException {
-
 
         long count = productRepo.countByName(productModel.getName());
         if (count > 0) {
@@ -59,7 +57,8 @@ public class ProductServices {
         productEntity.setCategoryId(productModel.getCategoryId());
         productEntity.setRecStatus(GlobalConstant.REC_STATUS_ACTIVE);
         productEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-        productEntity.setCreatorId(productModel.getActorId() == null ? 0 : productModel.getActorId());
+        productEntity.setCreatorId(productModel.getActorId() == null ? 0
+                : productModel.getActorId());
 
         return productRepo.save(productEntity);
     }
@@ -79,8 +78,8 @@ public class ProductServices {
         return products;
     }
 
-    public ProductEntity findById(Integer id) throws ClientException, NotFoundException {
-
+    public ProductEntity findById(Integer id)
+            throws ClientException, NotFoundException {
 
         ProductEntity product = productRepo.findById(id).orElse(null);
         productValidator.nullCheckObject(product);
@@ -88,11 +87,12 @@ public class ProductServices {
         return product;
     }
 
-    public ProductEntity edit(ProductModel productModel) throws ClientException, NotFoundException {
+    public ProductEntity edit(ProductModel productModel)
+            throws ClientException, NotFoundException {
 
-        
         if (!productRepo.existsById(productModel.getId())) {
-            throw new NotFoundException("Cannot find product with id: " + productModel.getId());
+            throw new NotFoundException(
+                    "Cannot find product with id: " + productModel.getId());
         }
 
         ProductEntity productEntity = new ProductEntity();
@@ -121,39 +121,38 @@ public class ProductServices {
         }
 
         productEntity.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
-        productEntity.setUpdaterId(
-                productModel.getActorId() == null ? 0 : productModel.getActorId());
+        productEntity.setUpdaterId(productModel.getActorId() == null ? 0
+                : productModel.getActorId());
 
         return productRepo.save(productEntity);
 
     }
 
-    public ProductEntity delete(ProductModel productModel) throws ClientException, NotFoundException {
-        
+    public ProductEntity delete(ProductModel productModel)
+            throws ClientException, NotFoundException {
 
         if (!productRepo.existsById(productModel.getId())) {
-            throw new NotFoundException("Cannot find product with id: " + productModel.getId());
+            throw new NotFoundException(
+                    "Cannot find product with id: " + productModel.getId());
         }
 
         ProductEntity product = new ProductEntity();
         product = findById(productModel.getId());
 
-        if (product.getRecStatus().equalsIgnoreCase(GlobalConstant.REC_STATUS_NON_ACTIVE)) {
-            throw new ClientException("Product id(" + productModel.getId() + ") is already been deleted.");
+        if (product.getRecStatus()
+                .equalsIgnoreCase(GlobalConstant.REC_STATUS_NON_ACTIVE)) {
+            throw new ClientException("Product id(" + productModel.getId()
+                    + ") is already been deleted.");
         }
 
         product.setRecStatus(GlobalConstant.REC_STATUS_NON_ACTIVE);
         product.setDeletedDate(new Timestamp(System.currentTimeMillis()));
-        product.setDeleterId(
-            productModel.getActorId() == null ? 0 : productModel.getActorId()
-        );
-      
+        product.setDeleterId(productModel.getActorId() == null ? 0
+                : productModel.getActorId());
+
         productRepo.doDelete(product.getId(), product.getDeleterId());
 
         return product;
 
-    
-
     }
 }
-

@@ -14,13 +14,17 @@ import id.co.nds.catalogue.entities.UserEntity;
 @Repository
 @Transactional
 
-public interface UserRepo extends JpaRepository<UserEntity, Integer>, JpaSpecificationExecutor<UserEntity> {
-    @Query(value = " SELECT COUNT(*)FROM ms_users where rec_status = '" + GlobalConstant.REC_STATUS_ACTIVE
-            + "' AND LOWER(call_number) = LOWER(:call_number)", nativeQuery  = true)
+public interface UserRepo extends JpaRepository<UserEntity, Integer>,
+        JpaSpecificationExecutor<UserEntity> {
+    @Query(value = " SELECT COUNT(*)FROM ms_users where rec_status = '"
+            + GlobalConstant.REC_STATUS_ACTIVE
+            + "' AND LOWER(call_number) = LOWER(:call_number)", nativeQuery = true)
     long countByName(@Param("call_number") String callNumber);
 
     @Modifying
-    @Query(value = "UPDATE ms_users SET rec_status = '" + GlobalConstant.REC_STATUS_NON_ACTIVE +"' deleter_id = ?2. deleted_date = NOW()" + "WHERE id = ?1", nativeQuery = true)
+    @Query(value = "UPDATE ms_users SET rec_status = '"
+            + GlobalConstant.REC_STATUS_NON_ACTIVE
+            + "' deleter_id = ?2. deleted_date = NOW()"
+            + "WHERE id = ?1", nativeQuery = true)
     Integer doDelete(Integer id, Integer deleterId);
 }
-

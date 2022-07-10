@@ -28,148 +28,152 @@ public class CategoryController {
 
     @PostMapping(value = "/post")
     private ResponseEntity<ResponseModel> postCategoryController(
-            @RequestBody CategoryModel categoryModel) {
+            @RequestBody CategoryModel categoryModel) throws ClientException {
 
-        try {
-            CategoryEntity categoryEntity = categoryServices.add(categoryModel);
+        // try {
+        CategoryEntity categoryEntity = categoryServices.add(categoryModel);
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("New Category is successfully added");
-            response.setData(categoryEntity);
-            return ResponseEntity.ok(response);
-        } catch (ClientException e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.badRequest().body(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("New Category is successfully added");
+        response.setData(categoryEntity);
+        return ResponseEntity.ok(response);
+        // } catch (ClientException e) {
+        // // TODO: handle exception
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg(e.getMessage());
+        // return ResponseEntity.badRequest().body(response);
 
-        } catch (Exception e) {
+        // } catch (Exception e) {
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is a failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
 
-        }
+        // }
     }
 
     @GetMapping(value = "/get")
-    public ResponseEntity<ResponseModel> getAllCategoryController() throws ClientException {
+    public ResponseEntity<ResponseModel> getAllCategoryController()
+            throws ClientException {
 
-        try {
-            List<CategoryEntity> products = categoryServices.findAll();
+        // try {
+        List<CategoryEntity> products = categoryServices.findAll();
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Request successfully");
-            response.setData(products);
-            return ResponseEntity.ok(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("Request successfully");
+        response.setData(products);
+        return ResponseEntity.ok(response);
 
-        } catch (Exception e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-        }
+        // } catch (Exception e) {
+        // // TODO: handle exception
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
+        // }
 
     }
 
     @GetMapping(value = "/get/{id}")
-    public ResponseEntity<ResponseModel> getUserByIdController(String id) throws ClientException, NotFoundException {
+    public ResponseEntity<ResponseModel> getUserByIdController(String id)
+            throws ClientException, NotFoundException {
 
-        try {
+        // try {
 
-            CategoryEntity categoryEntity = categoryServices.findById(id);
+        CategoryEntity categoryEntity = categoryServices.findById(id);
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Request successfully");
-            response.setData(categoryEntity);
-            return ResponseEntity.ok(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("Request successfully");
+        response.setData(categoryEntity);
+        return ResponseEntity.ok(response);
 
-        } catch (ClientException e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        // } catch (ClientException e) {
+        // // TODO: handle exception
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg(e.getMessage());
+        // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 
-        } catch (NotFoundException e) {
+        // } catch (NotFoundException e) {
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is a failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
 
-        } catch (Exception e) {
+        // } catch (Exception e) {
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
-        }
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is a failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
+        // }
     }
 
     @PutMapping(value = "/update")
-    public ResponseEntity<ResponseModel> putUserController(@RequestBody CategoryModel categoryModel)
+    public ResponseEntity<ResponseModel> putUserController(
+            @RequestBody CategoryModel categoryModel)
             throws ClientException, NotFoundException {
 
-        try {
+        // try {
 
-            CategoryEntity categoryEntity = categoryServices.edit(categoryModel);
+        CategoryEntity categoryEntity = categoryServices.edit(categoryModel);
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("User");
-            response.setData(categoryEntity);
-            return ResponseEntity.ok(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("User");
+        response.setData(categoryEntity);
+        return ResponseEntity.ok(response);
 
-        } catch (ClientException e) {
-            // TODO: handle exception
+        // } catch (ClientException e) {
+        // // TODO: handle exception
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.badRequest().body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg(e.getMessage());
+        // return ResponseEntity.badRequest().body(response);
 
-        } catch (Exception e) {
+        // } catch (Exception e) {
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is a failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
 
-        }
+        // }
     }
 
     @DeleteMapping(value = "/delete")
-    public ResponseEntity<ResponseModel> deleteUserController(@RequestBody CategoryModel categoryModel)
+    public ResponseEntity<ResponseModel> deleteUserController(
+            @RequestBody CategoryModel categoryModel)
             throws ClientException, NotFoundException {
 
-        try {
-            CategoryEntity categoryEntity = categoryServices.delete(categoryModel);
+        // try {
+        CategoryEntity categoryEntity = categoryServices.delete(categoryModel);
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Category is successfully deleted");
-            response.setData(categoryEntity);
-            return ResponseEntity.ok(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("Category is successfully deleted");
+        response.setData(categoryEntity);
+        return ResponseEntity.ok(response);
 
-        } catch (ClientException e) {
-            // TODO: handle exception
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        // } catch (ClientException e) {
+        // // TODO: handle exception
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg(e.getMessage());
+        // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 
-        } catch (NotFoundException e) {
+        // } catch (NotFoundException e) {
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg(e.getMessage());
+        // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 
-        } catch (Exception e) {
+        // } catch (Exception e) {
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("sorry, there is a failure on our server");
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("sorry, there is a failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
 
-        }
+        // }
 
     }
 

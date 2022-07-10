@@ -18,28 +18,26 @@ import org.springframework.web.context.request.WebRequest;
 
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-// import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-
 import id.co.nds.catalogue.exceptions.ClientException;
 import id.co.nds.catalogue.exceptions.NotFoundException;
 import id.co.nds.catalogue.models.ResponseModel;
 
 @ControllerAdvice
 @RestController
-public class GlobalResponseEntityHandler extends ResponseEntityExceptionHandler {
-
+public class GlobalResponseEntityHandler
+        extends ResponseEntityExceptionHandler {
 
     // @ExceptionHandler(InvalidFormatException.class)
     // public ResponseEntity<Object> handleInvalidFormatException
     // (InvalidFormatException ex, WebRequest request){
-    //     Map<String, String> data = new HashMap<>();
-    //     data.put("error", ex.getMessage());
+    // Map<String, String> data = new HashMap<>();
+    // data.put("error", ex.getMessage());
 
-    //     ResponseModel response = new ResponseModel();
-    //     response.setMsg("Client error");
-    //     response.setData(data);
+    // ResponseModel response = new ResponseModel();
+    // response.setMsg("Client error");
+    // response.setData(data);
 
-    //     return ResponseEntity.badRequest().body(response);
+    // return ResponseEntity.badRequest().body(response);
     // }
 
     @ExceptionHandler({ ClientException.class })
@@ -58,13 +56,12 @@ public class GlobalResponseEntityHandler extends ResponseEntityExceptionHandler 
     }
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-            HttpHeaders headers, HttpStatus status,
-            WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex, HttpHeaders headers,
+            HttpStatus status, WebRequest request) {
         // TODO Auto-generated method stub
         Map<String, List<String>> data = new HashMap<>();
-        List<String> errors = ex.getBindingResult().getFieldErrors()
-                .stream()
+        List<String> errors = ex.getBindingResult().getFieldErrors().stream()
                 .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .collect(Collectors.toList());
         if (errors.size() > 1) {
@@ -81,8 +78,9 @@ public class GlobalResponseEntityHandler extends ResponseEntityExceptionHandler 
     }
 
     @Override
-    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
-            HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
+            HttpRequestMethodNotSupportedException ex, HttpHeaders headers,
+            HttpStatus status, WebRequest request) {
         // TODO Auto-generated method stub
         Map<String, String> data = new HashMap<>();
         data.put("error", ex.getMessage());
@@ -95,8 +93,8 @@ public class GlobalResponseEntityHandler extends ResponseEntityExceptionHandler 
     }
 
     @ExceptionHandler({ NotFoundException.class })
-    public ResponseEntity<Object> handleNotFoundException(
-            NotFoundException ex, WebRequest request) {
+    public ResponseEntity<Object> handleNotFoundException(NotFoundException ex,
+            WebRequest request) {
 
         Map<String, String> data = new HashMap<>();
         data.put("error", ex.getMessage());
@@ -111,8 +109,8 @@ public class GlobalResponseEntityHandler extends ResponseEntityExceptionHandler 
 
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex,
-            Object body, HttpHeaders headers,
-            HttpStatus status, WebRequest request) {
+            Object body, HttpHeaders headers, HttpStatus status,
+            WebRequest request) {
         // TODO Auto-generated method stub
         Map<String, String> data = new HashMap<>();
         data.put("error", ex.getMessage());
@@ -121,7 +119,8 @@ public class GlobalResponseEntityHandler extends ResponseEntityExceptionHandler 
         response.setMsg("Internal Server Error");
         response.setData(data);
 
-        return super.handleExceptionInternal(ex, body, headers, status, request);
+        return super.handleExceptionInternal(ex, body, headers, status,
+                request);
     }
 
 }

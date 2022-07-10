@@ -39,68 +39,42 @@ public class UserInfoEntity {
     @Column(name = "rec_status")
     private String recStatus;
 
-    public Integer getId() {
-        return id;
-    }
+    public Integer getId() { return id; }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public void setId(Integer id) { this.id = id; }
 
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public String getRoleId() {
-        return roleId;
-    }
+    public String getRoleId() { return roleId; }
 
-    public void setRoleId(String roleId) {
-        this.roleId = roleId;
-    }
+    public void setRoleId(String roleId) { this.roleId = roleId; }
 
-    public String getRoleName() {
-        return roleName;
-    }
+    public String getRoleName() { return roleName; }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
+    public void setRoleName(String roleName) { this.roleName = roleName; }
 
-    public Timestamp getCreatedDate() {
-        return createdDate;
-    }
+    public Timestamp getCreatedDate() { return createdDate; }
 
     public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 
-    public Timestamp getUpdateDate() {
-        return updateDate;
-    }
+    public Timestamp getUpdateDate() { return updateDate; }
 
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
     }
 
-    public Timestamp getDeletedDate() {
-        return deletedDate;
-    }
+    public Timestamp getDeletedDate() { return deletedDate; }
 
     public void setDeletedDate(Timestamp deletedDate) {
         this.deletedDate = deletedDate;
     }
 
-    public String getRecStatus() {
-        return recStatus;
-    }
+    public String getRecStatus() { return recStatus; }
 
-    public void setRecStatus(String recStatus) {
-        this.recStatus = recStatus;
-    }
+    public void setRecStatus(String recStatus) { this.recStatus = recStatus; }
 
 }

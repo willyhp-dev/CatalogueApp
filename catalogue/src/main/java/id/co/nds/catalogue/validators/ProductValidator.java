@@ -14,7 +14,8 @@ public class ProductValidator {
 
     public void notNullCheckProductId(Integer id) throws ClientException {
         if (id != null) {
-            throw new ClientException("Product id is auto generated, do not input id");
+            throw new ClientException(
+                    "Product id is auto generated, do not input id");
         }
     }
 
@@ -56,19 +57,23 @@ public class ProductValidator {
 
     public void validateQuantity(Integer quantity) throws ClientException {
         if (quantity < 0) {
-            throw new ClientException("Product quantity must be positive integer number");
+            throw new ClientException(
+                    "Product quantity must be positive integer number");
         }
     }
 
     public void validateCategoryId(String categoryId) throws ClientException {
         if (categoryId.length() != 6 || !categoryId.startsWith("PC")) {
-            throw new ClientException("Product category id contains six digits and starts with 'PC' ");
+            throw new ClientException(
+                    "Product category id contains six digits and starts with 'PC' ");
         }
     }
 
-    public void validateRecStatus(String id, String recStatus) throws ClientException {
-        if(recStatus.equalsIgnoreCase(GlobalConstant.REC_STATUS_NON_ACTIVE)){
-            throw new ClientException("Product with id = " + id + "is already been deleted. ");
+    public void validateRecStatus(String id, String recStatus)
+            throws ClientException {
+        if (recStatus.equalsIgnoreCase(GlobalConstant.REC_STATUS_NON_ACTIVE)) {
+            throw new ClientException(
+                    "Product with id = " + id + "is already been deleted. ");
         }
     }
 

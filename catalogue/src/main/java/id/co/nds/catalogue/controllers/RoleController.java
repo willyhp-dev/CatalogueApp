@@ -60,7 +60,8 @@ public class RoleController {
     }
 
     @GetMapping(value = "/get/{id}")
-    public ResponseEntity<ResponseModel> getRoleByIdController(@NotNull @PositiveOrZero @PathVariable String id)
+    public ResponseEntity<ResponseModel> getRoleByIdController(
+            @NotNull @PositiveOrZero @PathVariable String id)
             throws ClientException, NotFoundException {
 
         RoleEntity roleEntity = roleServices.findById(id);
@@ -74,7 +75,8 @@ public class RoleController {
 
     @PutMapping(value = "/update")
     public ResponseEntity<ResponseModel> putRoleController(
-            @Validated(UpdatingById.class) @RequestBody RoleModel roleModel) throws ClientException, NotFoundException {
+            @Validated(UpdatingById.class) @RequestBody RoleModel roleModel)
+            throws ClientException, NotFoundException {
 
         RoleEntity roleEntity = roleServices.edit(roleModel);
 
@@ -86,7 +88,8 @@ public class RoleController {
 
     @DeleteMapping(value = "/delete")
     public ResponseEntity<ResponseModel> deleteRoleProductController(
-            @Validated(DeletingById.class) @RequestBody RoleModel roleModel) throws ClientException, NotFoundException {
+            @Validated(DeletingById.class) @RequestBody RoleModel roleModel)
+            throws ClientException, NotFoundException {
 
         RoleEntity roleEntity = roleServices.delete(roleModel);
 

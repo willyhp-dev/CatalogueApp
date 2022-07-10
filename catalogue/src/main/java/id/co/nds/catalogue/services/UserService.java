@@ -28,21 +28,22 @@ public class UserService {
 
     UserValidator userValidator = new UserValidator();
 
-    public List<UserInfoEntity> findByAllRole(String name) throws ClientException, NotFoundException {
+    public List<UserInfoEntity> findByAllRole(String name)
+            throws ClientException, NotFoundException {
 
-        List<UserInfoEntity> userInfoEntities = userInfoRepo.findByAllRole(name);
+        List<UserInfoEntity> userInfoEntities = userInfoRepo
+                .findByAllRole(name);
         userValidator.nullCheckObject(userInfoEntities);
-        
+
         return userInfoEntities;
-   }
-   
-   
+    }
+
     public UserEntity add(Usermodel usermodel) throws ClientException {
 
         // userValidator.notNullCheckUserId(usermodel.getId());
         // userValidator.nullCheckUserFullname(usermodel.getFullname());
         // userValidator.nullCheckUserRoleId(usermodel.getRoleId());
-       
+
         // userValidator.validateFullname(usermodel.getFullname());
         // userValidator.validateroleId(usermodel.getRoleId());
 
@@ -79,7 +80,8 @@ public class UserService {
         }
         userEntity.setRecStatus(GlobalConstant.REC_STATUS_ACTIVE);
         userEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-        userEntity.setCreatorId(usermodel.getActorId() == null ? 0 : usermodel.getActorId());
+        userEntity.setCreatorId(
+                usermodel.getActorId() == null ? 0 : usermodel.getActorId());
 
         return userRepo.save(userEntity);
 
@@ -102,7 +104,8 @@ public class UserService {
         return users;
     }
 
-    public UserEntity findById(Integer id) throws ClientException, NotFoundException {
+    public UserEntity findById(Integer id)
+            throws ClientException, NotFoundException {
 
         // userValidator.nullCheckUserId(id);
         // userValidator.validateUserId(id);
@@ -114,14 +117,16 @@ public class UserService {
 
     }
 
-    public UserEntity edit(Usermodel usermodel) throws ClientException, NotFoundException {
+    public UserEntity edit(Usermodel usermodel)
+            throws ClientException, NotFoundException {
 
         // userValidator.nullCheckUserId(usermodel.getId());
         // userValidator.validateUserId(usermodel.getId());
 
         if (!userRepo.existsById(usermodel.getId())) {
 
-            throw new NotFoundException("Cannot find User with id :" + usermodel.getId());
+            throw new NotFoundException(
+                    "Cannot find User with id :" + usermodel.getId());
         }
 
         UserEntity userEntity = new UserEntity();
@@ -153,25 +158,30 @@ public class UserService {
         }
 
         userEntity.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
-        userEntity.setUpdaterId(usermodel.getActorId() == null ? 0 : usermodel.getActorId());
+        userEntity.setUpdaterId(
+                usermodel.getActorId() == null ? 0 : usermodel.getActorId());
 
         return userRepo.save(userEntity);
     }
 
-    public UserEntity delete(Usermodel usermodel) throws ClientException, NotFoundException {
+    public UserEntity delete(Usermodel usermodel)
+            throws ClientException, NotFoundException {
 
         // userValidator.nullCheckUserId(usermodel.getId());
         // userValidator.validateUserId(usermodel.getId());
 
         if (!userRepo.existsById(usermodel.getId())) {
-            throw new NotFoundException("Cannot find User with id :" + usermodel.getId());
+            throw new NotFoundException(
+                    "Cannot find User with id :" + usermodel.getId());
         }
 
         UserEntity userEntity = new UserEntity();
         userEntity = findById(usermodel.getId());
 
-        if (userEntity.getRecStatus().equalsIgnoreCase(GlobalConstant.REC_STATUS_NON_ACTIVE)) {
-            throw new ClientException("User id (" + usermodel.getId() + ") is Already been deleted");
+        if (userEntity.getRecStatus()
+                .equalsIgnoreCase(GlobalConstant.REC_STATUS_NON_ACTIVE)) {
+            throw new ClientException("User id (" + usermodel.getId()
+                    + ") is Already been deleted");
         }
 
         userEntity.setRecStatus(GlobalConstant.REC_STATUS_NON_ACTIVE);

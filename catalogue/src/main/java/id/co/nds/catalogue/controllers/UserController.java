@@ -39,30 +39,31 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(value = "/adduser")
-    public ResponseEntity<ResponseModel> postUserController
-    (@Validated(PostingNew.class)  @RequestBody Usermodel usermodel) throws ClientException {
+    public ResponseEntity<ResponseModel> postUserController(
+            @Validated(PostingNew.class) @RequestBody Usermodel usermodel)
+            throws ClientException {
 
         // try {
 
-            UserEntity userEntity = userService.add(usermodel);
+        UserEntity userEntity = userService.add(usermodel);
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("New User is successfully added");
-            response.setData(userEntity);
-            return ResponseEntity.ok(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("New User is successfully added");
+        response.setData(userEntity);
+        return ResponseEntity.ok(response);
 
         // } catch (ClientException e) {
-        //     // TODO: handle exception
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg(e.getMessage());
-        //     return ResponseEntity.badRequest().body(response);
+        // // TODO: handle exception
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg(e.getMessage());
+        // return ResponseEntity.badRequest().body(response);
 
         // } catch (Exception e) {
 
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg("Sorry, there is a failure on our server");
-        //     e.printStackTrace();
-        //     return ResponseEntity.internalServerError().body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is a failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
 
         // }
     }
@@ -72,19 +73,19 @@ public class UserController {
 
         // try {
 
-            List<UserEntity> userEntity = userService.findAll();
+        List<UserEntity> userEntity = userService.findAll();
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Request successfully");
-            response.setData(userEntity);
-            return ResponseEntity.ok(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("Request successfully");
+        response.setData(userEntity);
+        return ResponseEntity.ok(response);
 
         // } catch (Exception e) {
-        //     // TODO: handle exception
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg("Sorry, there is failure on our server");
-        //     e.printStackTrace();
-        //     return ResponseEntity.internalServerError().body(response);
+        // // TODO: handle exception
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
         // }
     }
 
@@ -102,124 +103,128 @@ public class UserController {
         return ResponseEntity.ok(response);
 
         // } catch (Exception e) {
-        //     // TODO: handle exception
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg("Sorry, there is  a failure on our server");
-        //     e.printStackTrace();
+        // // TODO: handle exception
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is a failure on our server");
+        // e.printStackTrace();
 
-        //     return ResponseEntity.ok(response);
+        // return ResponseEntity.ok(response);
         // }
     }
 
     @GetMapping(value = "/getuser/info")
-    public ResponseEntity<ResponseModel> getAllByRoleController(@RequestParam String name)
-     throws ClientException, NotFoundException {
+    public ResponseEntity<ResponseModel> getAllByRoleController(
+            @RequestParam String name)
+            throws ClientException, NotFoundException {
 
-            List<UserInfoEntity> userInfoEntities = userService.findByAllRole(name);
+        List<UserInfoEntity> userInfoEntities = userService.findByAllRole(name);
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Request successfully");
-            response.setData(userInfoEntities);
-            return ResponseEntity.ok(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("Request successfully");
+        response.setData(userInfoEntities);
+        return ResponseEntity.ok(response);
 
     }
-    
+
     @GetMapping(value = "/getuser/{id}")
-    public ResponseEntity<ResponseModel> getUserByIdController
-    (@NotNull @PositiveOrZero  @PathVariable Integer id) throws ClientException, NotFoundException {
+    public ResponseEntity<ResponseModel> getUserByIdController(
+            @NotNull @PositiveOrZero @PathVariable Integer id)
+            throws ClientException, NotFoundException {
 
         // try {
 
-            UserEntity userEntity = userService.findById(id);
+        UserEntity userEntity = userService.findById(id);
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("Request successfully");
-            response.setData(userEntity);
-            return ResponseEntity.ok(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("Request successfully");
+        response.setData(userEntity);
+        return ResponseEntity.ok(response);
 
         // } catch (ClientException e) {
-        //     // TODO: handle exception
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg(e.getMessage());
-        //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        // // TODO: handle exception
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg(e.getMessage());
+        // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 
         // } catch (NotFoundException e) {
 
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg("Sorry, there is a failure on our server");
-        //     e.printStackTrace();
-        //     return ResponseEntity.internalServerError().body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is a failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
 
         // } catch (Exception e) {
 
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg("Sorry, there is a failure on our server");
-        //     e.printStackTrace();
-        //     return ResponseEntity.internalServerError().body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is a failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
         // }
     }
 
     @PutMapping(value = "/updateuser")
-    public ResponseEntity<ResponseModel> putUserController
-    (@Validated(UpdatingById.class) @RequestBody Usermodel usermodel) throws ClientException, NotFoundException {
+    public ResponseEntity<ResponseModel> putUserController(
+            @Validated(UpdatingById.class) @RequestBody Usermodel usermodel)
+            throws ClientException, NotFoundException {
 
         // try {
 
-            UserEntity userEntity = userService.edit(usermodel);
+        UserEntity userEntity = userService.edit(usermodel);
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("User");
-            response.setData(userEntity);
-            return ResponseEntity.ok(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("User");
+        response.setData(userEntity);
+        return ResponseEntity.ok(response);
 
         // } catch (ClientException e) {
-        //     // TODO: handle exception
+        // // TODO: handle exception
 
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg("Sorry, there is a failure on our server");
-        //     return ResponseEntity.badRequest().body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is a failure on our server");
+        // return ResponseEntity.badRequest().body(response);
 
         // } catch (Exception e) {
 
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg("Sorry, there is a failure on our server");
-        //     e.printStackTrace();
-        //     return ResponseEntity.internalServerError().body(response);
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("Sorry, there is a failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
 
         // }
     }
 
     @DeleteMapping(value = "/deleteuser")
-    public ResponseEntity<ResponseModel> deleteUserController
-    (@Validated(DeletingById.class)  @RequestBody Usermodel usermodel) throws ClientException, NotFoundException {
+    public ResponseEntity<ResponseModel> deleteUserController(
+            @Validated(DeletingById.class) @RequestBody Usermodel usermodel)
+            throws ClientException, NotFoundException {
 
         // try {
-            UserEntity userEntity = userService.delete(usermodel);
+        UserEntity userEntity = userService.delete(usermodel);
 
-            ResponseModel response = new ResponseModel();
-            response.setMsg("User is successfully deleted");
-            response.setData(userEntity);
-            return ResponseEntity.ok(response);
+        ResponseModel response = new ResponseModel();
+        response.setMsg("User is successfully deleted");
+        response.setData(userEntity);
+        return ResponseEntity.ok(response);
 
         // } catch (ClientException e) {
-        //     // TODO: handle exception
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg(e.getMessage());
-        //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        // // TODO: handle exception
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg(e.getMessage());
+        // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 
         // } catch (NotFoundException e) {
 
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg(e.getMessage());
-        //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-            
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg(e.getMessage());
+        // return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
         // } catch (Exception e) {
 
-        //     ResponseModel response = new ResponseModel();
-        //     response.setMsg("sorry, there is a failure on our server");
-        //     e.printStackTrace();
-        //     return ResponseEntity.internalServerError().body(response);
-            
+        // ResponseModel response = new ResponseModel();
+        // response.setMsg("sorry, there is a failure on our server");
+        // e.printStackTrace();
+        // return ResponseEntity.internalServerError().body(response);
+
         // }
 
     }

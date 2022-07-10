@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +27,12 @@ public class RoleServices {
         roleEntity.setName(roleModel.getName());
         roleEntity.setRecStatus(GlobalConstant.REC_STATUS_ACTIVE);
         roleEntity.setCreatedDate(new Timestamp(System.currentTimeMillis()));
-        roleEntity.setCreatorId(roleModel.getActorId() == null ? 0
-                : roleModel.getActorId());
+        roleEntity.setCreatorId(
+                roleModel.getActorId() == null ? 0 : roleModel.getActorId());
 
         return roleRepo.save(roleEntity);
     }
-    
+
     public List<RoleEntity> findAll() {
 
         List<RoleEntity> roles = new ArrayList<>();
@@ -42,15 +41,17 @@ public class RoleServices {
         return roles;
     }
 
-    public RoleEntity findById(String id) throws ClientException, NotFoundException {
+    public RoleEntity findById(String id)
+            throws ClientException, NotFoundException {
 
         RoleEntity roleEntity = roleRepo.findById(id).orElse(null);
         roleValidator.nullCheckObject(roleEntity);
 
         return roleEntity;
     }
-    
-    public RoleEntity edit(RoleModel roleModel) throws ClientException, NotFoundException {
+
+    public RoleEntity edit(RoleModel roleModel)
+            throws ClientException, NotFoundException {
 
         if (!roleRepo.existsById(roleModel.getId())) {
             throw new NotFoundException("Cannot find Role with id" + roleModel);
@@ -70,32 +71,37 @@ public class RoleServices {
         }
 
         roleEntity.setUpdatedDate(new Timestamp(System.currentTimeMillis()));
-        roleEntity.setUpdaterId(roleModel.getActorId() == null ? 0 : roleModel.getActorId());
+        roleEntity.setUpdaterId(
+                roleModel.getActorId() == null ? 0 : roleModel.getActorId());
 
         return roleRepo.save(roleEntity);
 
     }
-    
-    public RoleEntity delete(RoleModel roleModel) throws ClientException, NotFoundException {
-        
+
+    public RoleEntity delete(RoleModel roleModel)
+            throws ClientException, NotFoundException {
+
         if (!roleRepo.existsById(roleModel.getId())) {
-            throw new NotFoundException("Cannot find Role with id :" + roleModel.getId());
+            throw new NotFoundException(
+                    "Cannot find Role with id :" + roleModel.getId());
         }
 
         RoleEntity roleEntity = new RoleEntity();
         roleEntity = findById(roleModel.getId());
 
-        if (roleEntity.getRecStatus().equalsIgnoreCase(GlobalConstant.REC_STATUS_NON_ACTIVE)) {
-            throw new ClientException("Role id (" + roleModel.getId() + ") is already been deleted");
+        if (roleEntity.getRecStatus()
+                .equalsIgnoreCase(GlobalConstant.REC_STATUS_NON_ACTIVE)) {
+            throw new ClientException("Role id (" + roleModel.getId()
+                    + ") is already been deleted");
         }
-        
+
         roleEntity.setRecStatus(GlobalConstant.REC_STATUS_NON_ACTIVE);
         roleEntity.setDeletedDate(new Timestamp(System.currentTimeMillis()));
-        roleEntity.setDeleterId(roleModel.getActorId() == null ? 0 : roleModel.getActorId());
+        roleEntity.setDeleterId(
+                roleModel.getActorId() == null ? 0 : roleModel.getActorId());
 
         return roleRepo.save(roleEntity);
 
     }
 
-    
 }
