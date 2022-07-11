@@ -5,14 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties.RSocket.Client;
 import org.springframework.stereotype.Service;
 
+import id.co.nds.catalogue.entities.ProductEntity;
 import id.co.nds.catalogue.entities.RoleEntity;
+import id.co.nds.catalogue.entities.UserEntity;
 import id.co.nds.catalogue.exceptions.ClientException;
 import id.co.nds.catalogue.exceptions.NotFoundException;
 import id.co.nds.catalogue.globals.GlobalConstant;
 import id.co.nds.catalogue.models.RoleModel;
 import id.co.nds.catalogue.repos.RoleRepo;
+import id.co.nds.catalogue.repos.UserRepo;
 import id.co.nds.catalogue.validators.RoleValidator;
 
 @Service
@@ -32,6 +36,8 @@ public class RoleServices {
 
         return roleRepo.save(roleEntity);
     }
+
+   
 
     public List<RoleEntity> findAll() {
 

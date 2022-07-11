@@ -44,6 +44,19 @@ public class ProductServices {
 
     }
 
+    public List<ProductEntity> findProductByCategoryId(String categoryId)
+            throws ClientException, NotFoundException {
+
+        categoryValidator.nullCheckCategoryId(categoryId);
+        categoryValidator.validateCategoryId(categoryId);
+
+        List<ProductEntity> product = productRepo
+                .findProductByCategoryId(categoryId);
+        productValidator.nullCheckObject(product);
+
+        return product;
+    }
+
     public ProductEntity add(ProductModel productModel) throws ClientException {
 
         long count = productRepo.countByName(productModel.getName());

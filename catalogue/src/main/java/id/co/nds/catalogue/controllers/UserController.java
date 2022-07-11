@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -123,6 +124,44 @@ public class UserController {
         response.setMsg("Request successfully");
         response.setData(userInfoEntities);
         return ResponseEntity.ok(response);
+
+    }
+
+    @GetMapping(value = "/getuser/role")
+    public ResponseEntity<ResponseModel> getUserByRoleId(
+            @RequestParam String roleName) {
+
+        try {
+
+            List<UserEntity> user = userService.findUserByRoleId(roleName);
+
+            ResponseModel response = new ResponseModel();
+            response.setMsg("Request Successfully");
+            response.setData(user);
+            return ResponseEntity.ok(response);
+
+        } catch (
+
+        ClientException e) {
+            // TODO: handle exception
+            ResponseModel response = new ResponseModel();
+            response.setMsg(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (NotFoundException e) {
+
+            ResponseModel response = new ResponseModel();
+            response.setMsg(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+        } catch (Exception e) {
+
+            ResponseModel response = new ResponseModel();
+            response.setMsg("Sorry, there is a failure on our server");
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().body(response);
+        }
 
     }
 

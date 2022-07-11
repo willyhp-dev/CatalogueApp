@@ -1,5 +1,7 @@
 package id.co.nds.catalogue.repos;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -27,4 +29,9 @@ public interface UserRepo extends JpaRepository<UserEntity, Integer>,
             + "' deleter_id = ?2. deleted_date = NOW()"
             + "WHERE id = ?1", nativeQuery = true)
     Integer doDelete(Integer id, Integer deleterId);
+
+    @Query(value =" SELECT p.*,c.name AS role_name FROM ms_users AS p " +
+    " JOIN ms_role AS c ON p.role_id = c.id" +
+    " WHERE c.name = ?1", nativeQuery = true)
+        List<UserEntity> findUserByRoleId(String rolename);
 }

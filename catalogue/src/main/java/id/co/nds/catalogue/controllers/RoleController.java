@@ -60,8 +60,7 @@ public class RoleController {
     }
 
     @GetMapping(value = "/get/{id}")
-    public ResponseEntity<ResponseModel> getRoleByIdController(
-            @NotNull @PositiveOrZero @PathVariable String id)
+    public ResponseEntity<ResponseModel> getRoleByIdController(@PathVariable("id") String id)
             throws ClientException, NotFoundException {
 
         RoleEntity roleEntity = roleServices.findById(id);

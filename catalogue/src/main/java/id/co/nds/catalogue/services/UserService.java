@@ -38,6 +38,16 @@ public class UserService {
         return userInfoEntities;
     }
 
+    public List<UserEntity> findUserByRoleId(String roleName)
+            throws ClientException, NotFoundException {
+
+        List<UserEntity> user = userRepo.findUserByRoleId(roleName);
+        userValidator.nullCheckObject(user);
+
+        return user;
+
+    }
+
     public UserEntity add(Usermodel usermodel) throws ClientException {
 
         // userValidator.notNullCheckUserId(usermodel.getId());
