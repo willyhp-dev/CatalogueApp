@@ -2,7 +2,7 @@ package id.co.nds.catalogue.repos;
 
 import java.util.List;
 
-import org.hibernate.query.NativeQuery;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;

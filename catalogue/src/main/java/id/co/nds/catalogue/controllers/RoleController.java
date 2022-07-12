@@ -2,8 +2,6 @@ package id.co.nds.catalogue.controllers;
 
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +29,7 @@ import id.co.nds.catalogue.services.RoleServices;
 @Validated
 @RequestMapping("/role")
 public class RoleController {
+
     @Autowired
     private RoleServices roleServices;
 
@@ -60,7 +59,8 @@ public class RoleController {
     }
 
     @GetMapping(value = "/get/{id}")
-    public ResponseEntity<ResponseModel> getRoleByIdController(@PathVariable("id") String id)
+    public ResponseEntity<ResponseModel> getRoleByIdController(
+            @PathVariable("id") String id)
             throws ClientException, NotFoundException {
 
         RoleEntity roleEntity = roleServices.findById(id);
