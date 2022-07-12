@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS ms_loan;
 CREATE TABLE ms_loan(
     id VARCHAR(10) PRIMARY KEY NOT NULL,
     user_id INT NOT NULL,
-    role_id VARCHAR(5) NOT NULL,
+    role_id VARCHAR(5) NOT NULL UNIQUE,
     loan_amount NUMERIC(10,2) NOT NULL,
     loan_term NUMERIC(10,2) NOT NULL,
     interest_rate NUMERIC(10,2) NOT NULL,

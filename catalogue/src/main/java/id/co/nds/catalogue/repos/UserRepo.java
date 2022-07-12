@@ -33,5 +33,5 @@ public interface UserRepo extends JpaRepository<UserEntity, Integer>,
     @Query(value =" SELECT p.*,c.name AS role_name FROM ms_users AS p " +
     " JOIN ms_role AS c ON p.role_id = c.id" +
     " WHERE c.name = ?1", nativeQuery = true)
-        List<UserEntity> findUserByRoleId(String rolename);
+    List<UserEntity> findUserByRoleId(String rolename);
 }
