@@ -66,6 +66,16 @@ public class ProductController {
                 return ResponseEntity.ok(response);
 
         }
+        @GetMapping(value = "/get/quantity")
+        public ResponseEntity<ResponseModel> getAllProductQuantitylowerController() throws ClientException {
+             
+                List<ProductEntity> products = productServices.findProductLessThan5Qauntity();
+
+                ResponseModel response = new ResponseModel();
+                response.setMsg("Request successfully");
+                response.setData(products);
+                return ResponseEntity.ok(response);
+        }
 
         @GetMapping(value = "/get/search")
         public ResponseEntity<ResponseModel> searchProductController(

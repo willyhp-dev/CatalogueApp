@@ -91,6 +91,16 @@ public class ProductServices {
         return products;
     }
 
+    public List<ProductEntity> findProductLessThan5Qauntity() {
+        
+        List<ProductEntity> product = new ArrayList<>();
+       
+        productRepo.findProductByQuantitylower().forEach(product::add);
+        
+        
+        return product;
+    }
+
     public ProductEntity findById(Integer id)
             throws ClientException, NotFoundException {
 

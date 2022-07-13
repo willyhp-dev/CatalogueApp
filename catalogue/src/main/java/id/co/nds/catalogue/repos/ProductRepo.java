@@ -2,7 +2,6 @@ package id.co.nds.catalogue.repos;
 
 import java.util.List;
 
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
@@ -31,13 +30,15 @@ public interface ProductRepo extends JpaRepository<ProductEntity, Integer>,
                         + "WHERE id = ?1", nativeQuery = true)
         Integer doDelete(Integer id, Integer deleterId);
 
-        @Query(value =" SELECT p.*,c.name AS category_name FROM ms_product AS p " +
-                      " JOIN ms_category AS c ON p.category_id = c.id" +
-                      " WHERE p.category_id = ?1", nativeQuery = true)
+        @Query(value = " SELECT p.*,c.name AS category_name FROM ms_product AS p "
+                        + " JOIN ms_category AS c ON p.category_id = c.id"
+                        + " WHERE p.category_id = ?1", nativeQuery = true)
         List<ProductEntity> findProductByCategoryId(String categoryId);
-        
- 
- 
-        // @Query(value = "SELECT p.* FROM ms_product p JOIN ms_category c ON p.category_id =  ")
+
+        @Query(value = "SELECT * FROM ms_product where rec_status = 'A' AND quantity < 5", nativeQuery = true)
+        List<ProductEntity> findProductByQuantitylower();
+
+        // @Query(value = "SELECT p.* FROM ms_product p JOIN ms_category c ON
+        // p.category_id = ")
 }
 /*  */
