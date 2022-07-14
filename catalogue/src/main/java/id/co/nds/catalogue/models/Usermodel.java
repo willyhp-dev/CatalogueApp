@@ -32,7 +32,7 @@ public class Usermodel {
             PostingNew.class, GettingAllByCriteria.class, UpdatingById.class })
     private String roleId;
 
-    @Pattern(regexp = "^[0,+62][0-9]{9,12}$", message = "User Call Number partern input is invalid ,Must be numeric, and Start with 0 , +62", groups = {
+    @Pattern(regexp = "^[0,+62][0-9]{9,12}$", message = "User Call Number pattern input is invalid ,Must be numeric, and Start with 0 , +62", groups = {
             PostingNew.class, GettingAllByCriteria.class, UpdatingById.class })
     private String callnumber;
 

@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 
@@ -14,11 +14,10 @@ public class CronScheduler {
 
     // @Autowired
     // ProductServices productServices;
-
     static final Logger logger = LogManager.getLogger(CronScheduler.class);
     Integer counterB = 0;
 
-    // @Scheduled(cron = "0/10 * * * * ?")
+    @Scheduled(cron = "0/10 * * * * ?")
     public void cronScheduler() throws Exception {
         Integer counterA = 0;
         logger.debug("Start Cron at", Calendar.getInstance().getTime());

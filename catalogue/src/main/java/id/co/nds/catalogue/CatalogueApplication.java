@@ -18,17 +18,17 @@ public class CatalogueApplication {
 		SpringApplication.run(CatalogueApplication.class, args);
 	}
 
-	@PreDestroy
-	public void destroy() {
+	// @PreDestroy
+	// public void destroy() {
 		
-		logger.info("");
-		logger.info("Stopping Configuration for System");
+	// 	logger.info("");
+	// 	logger.info("Stopping Configuration for System");
 
-		logger.info("Stopping Custome DB scheduler");
-		CheckQuantityScheduler.shutdownScheduler();
+	// 	logger.info("Stopping Custome DB scheduler");
+	// 	CheckQuantityScheduler.shutdownScheduler();
 
-		logger.info("");
-		logger.info("Finish Stopping Configuration for System");
-	}
+	// 	logger.info("");
+	// 	logger.info("Finish Stopping Configuration for System");
+	// }
 
 }

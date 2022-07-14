@@ -27,7 +27,7 @@ public class CategoryController {
     private CategoryServices categoryServices;
 
     @PostMapping(value = "/post")
-    private ResponseEntity<ResponseModel> postCategoryController(
+    public ResponseEntity<ResponseModel> postCategoryController(
             @RequestBody CategoryModel categoryModel) throws ClientException {
 
         // try {

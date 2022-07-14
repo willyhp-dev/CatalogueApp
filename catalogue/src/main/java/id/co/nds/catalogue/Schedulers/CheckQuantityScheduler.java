@@ -22,7 +22,7 @@ import id.co.nds.catalogue.entities.ProductEntity;
 import id.co.nds.catalogue.repos.ParamRepo;
 import id.co.nds.catalogue.services.ProductServices;
 
-@Component
+// @Component
 public class CheckQuantityScheduler implements SchedulingConfigurer {
 
     @Autowired
@@ -31,7 +31,7 @@ public class CheckQuantityScheduler implements SchedulingConfigurer {
     @Autowired
     private ProductServices productServices;
 
-    private static final String PARAM_KEY = "CRON_10_Seconds";
+    private static final String PARAM_KEY = "CHECK_QUANTITY";
 
     Integer counter = 0;
 

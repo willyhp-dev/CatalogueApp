@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import id.co.nds.catalogue.entities.SaleEntity;
 import id.co.nds.catalogue.exceptions.ClientException;
-import id.co.nds.catalogue.exceptions.NotFoundException;
 import id.co.nds.catalogue.models.ResponseModel;
 import id.co.nds.catalogue.models.SaleModel;
 import id.co.nds.catalogue.services.SaleService;
